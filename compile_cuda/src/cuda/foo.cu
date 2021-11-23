@@ -1,4 +1,4 @@
-#include "foo.cuh"
+#include <cuda/foo.cuh>
 
 
 #define CHECK(res) { if(res != cudaSuccess){printf("Error ：%s:%d , ", __FILE__,__LINE__);   \

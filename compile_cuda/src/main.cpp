@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-#include "cuda/foo.cuh"
+#include <cuda/foo.cuh>
 
 // extern "C"
 // void useCUDA();
