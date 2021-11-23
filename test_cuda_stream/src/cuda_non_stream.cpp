@@ -1,10 +1,9 @@
-#include "cuda_runtime.h"  
+#include <cuda_runtime.h>
 #include <iostream>
-#include <stdio.h>  
-#include <math.h>  
- 
-extern "C"
-void kernel(int* a, int *b, int*c);
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <cuda/kernel.cuh>
  
 int main()
 {
@@ -39,7 +38,10 @@ int main()
 	cudaMemcpy(dev_a, host_a, FULL_DATA_SIZE * sizeof(int), cudaMemcpyHostToDevice);
 	cudaMemcpy(dev_b, host_b, FULL_DATA_SIZE * sizeof(int), cudaMemcpyHostToDevice);
  
-	kernel << <FULL_DATA_SIZE / 1024, 1024 >> > (dev_a, dev_b, dev_c);
+	dim3 grid(FULL_DATA_SIZE / 1024);
+	dim3 block(1024);
+	// kernel <<<grid, block >>> (dev_a, dev_b, dev_c);
+	kernel_wrapper(dev_a, dev_b, dev_c, grid, block);
  
 	//数据拷贝回主机
 	cudaMemcpy(host_c, dev_c, FULL_DATA_SIZE * sizeof(int), cudaMemcpyDeviceToHost);
@@ -56,8 +58,6 @@ int main()
 	{
 		std::cout << host_c[i] << std::endl;
 	}
- 
-	getchar();
  
 	cudaFreeHost(host_a);
 	cudaFreeHost(host_b);

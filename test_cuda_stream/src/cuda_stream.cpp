@@ -1,10 +1,9 @@
-#include "cuda_runtime.h"  
+#include <cuda_runtime.h>
 #include <iostream>
-#include <stdio.h>  
+#include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
-    
-extern "C"
-void kernel(int* a, int *b, int*c);
+#include <cuda/kernel.cuh>
  
 int main()
 {
@@ -57,12 +56,14 @@ int main()
 		cudaMemcpyAsync(dev_a, host_a + i, N * sizeof(int), cudaMemcpyHostToDevice, stream);
 		cudaMemcpyAsync(dev_b, host_b + i, N * sizeof(int), cudaMemcpyHostToDevice, stream);
  
-		kernel << <N / 1024, 1024, 0, stream >> > (dev_a, dev_b, dev_c);
+		dim3 grid(FULL_DATA_SIZE / 1024);
+		dim3 block(1024);
+		kernel_wrapper(dev_a, dev_b, dev_c, grid, block, 0, stream);
  
 		cudaMemcpyAsync(host_c + i, dev_c, N * sizeof(int), cudaMemcpyDeviceToHost, stream);
 	}
  
-	// wait until gpu execution finish  
+	// wait until gpu execution finish
 	cudaStreamSynchronize(stream);
  
 	cudaEventRecord(stop, 0);
@@ -77,9 +78,7 @@ int main()
 		std::cout << host_c[i] << std::endl;
 	}
  
-	getchar();
- 
-	// free stream and mem  
+	// free stream and mem
 	cudaFreeHost(host_a);
 	cudaFreeHost(host_b);
 	cudaFreeHost(host_c);

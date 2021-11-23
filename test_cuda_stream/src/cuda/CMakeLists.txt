@@ -1,2 +1,1 @@
-find_package(CUDA)
-
+cuda_add_library(gpu STATIC kernel.cu)
