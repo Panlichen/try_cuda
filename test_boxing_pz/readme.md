@@ -7,7 +7,7 @@ Check failed: (parallel_desc->sorted_machine_ids().size()) == (parallel_desc->pa
 可以参照其与Consistent View有关的[官方文档](https://docs.oneflow.org/master/parallelism/03_consistent_tensor.html)对代码进行改动。
 # 使用方法
 在15、16上使用可能会受到代理的负面影响，建议先
-```
+```shell
 unset HTTP_PROXY
 unset HTTPS_PROXY
 unset https_proxy
@@ -20,17 +20,17 @@ echo $http_proxy
 ```
 
 
-随后启动三个terminal分别输入（我全放在一个代码块里了）
+随后启动三个terminal分别输入，然后同时执行
+```shell
+MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=0 LOCAL_RANK=0 python test_p2b.py
 ```
-export MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=0 LOCAL_RANK=0
-export MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=1 LOCAL_RANK=1
-export MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=2 LOCAL_RANK=2
+```shell
+MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=1 LOCAL_RANK=1 python test_p2b.py
+```
+```shell
+MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=2 LOCAL_RANK=2 python test_p2b.py
 ```
 
-同时执行
-```
-test_p2b.py
-```
 即可看到结果
 # 代码解释
 ## 变量准备
