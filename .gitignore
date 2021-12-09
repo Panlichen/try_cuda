@@ -104,3 +104,5 @@ _deps
 *.ptx
 *.cubin
 *.fatbin
+
+log/

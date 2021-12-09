@@ -31,6 +31,11 @@ MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=1 LOCAL_RANK=1 python 
 MASTER_ADDR=127.0.0.1 MASTER_PORT=17789 WORLD_SIZE=3 RANK=2 LOCAL_RANK=2 python test_p2b.py
 ```
 
+运行single_client版本的p2b测试程序
+```shell
+ONEFLOW_TEST_DEVICE_NUM=4 python ../test_boxing/test_p2b_single_client.py
+```
+
 即可看到结果
 # 代码解释
 ## 变量准备
