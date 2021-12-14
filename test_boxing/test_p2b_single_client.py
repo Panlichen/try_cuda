@@ -64,8 +64,10 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
     @flow.global_function(function_config=func_config)
     def partial_sum_to_broadcast_job(input_blob: oft.Numpy.Placeholder((96, 96, 96))):
         result_list = []
-        for i in (2, 3):
-            for j in (1, 2, 3):
+        # for i in (2, 3):
+        #     for j in (1, 2, 3):
+        for i in (2, ):
+            for j in (2, ):
                 result_list.append(build_p2b(input_blob, i, j))
         return tuple(result_list)
 
@@ -80,8 +82,10 @@ class TestBoxingV2(flow.unittest.TestCase):
     @unittest.skipIf(os.getenv("ONEFLOW_TEST_CPU_ONLY"), "only test cpu cases")
     def test_partial_sum_to_broadcast(test_case):
         arg_dict = OrderedDict()
-        arg_dict["src_device_type"] = ["cpu", "gpu"]
-        arg_dict["dst_device_type"] = ["cpu", "gpu"]
+        # arg_dict["src_device_type"] = ["cpu", "gpu"]
+        # arg_dict["dst_device_type"] = ["cpu", "gpu"]
+        arg_dict["src_device_type"] = ["gpu"]
+        arg_dict["dst_device_type"] = ["gpu"]
         for arg in GenArgList(arg_dict):
             _test_partial_sum_to_broadcast(test_case, *arg)
 

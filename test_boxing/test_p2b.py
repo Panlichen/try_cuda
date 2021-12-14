@@ -44,8 +44,11 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
 
     def partial_sum_to_broadcast_job(input_blob):
         result_list = []
-        for i in (2, 3):
-            for j in (1, 2, 3):
+        # for i in (2, 3):
+        #     for j in (1, 2, 3):
+        #         result_list.append(build_p2b(input_blob, i, j))
+        for i in (2,):
+            for j in (2,):
                 result_list.append(build_p2b(input_blob, i, j))
         return tuple(result_list)
 
