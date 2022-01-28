@@ -91,4 +91,9 @@ class TestBoxingV2(flow.unittest.TestCase):
 
 
 if __name__ == "__main__":
+    import os
+    if "ONEFLOW_ENABLE_OFCCL" in os.environ.keys():
+        print("ONEFLOW_ENABLE_OFCCL is", os.environ.get("ONEFLOW_ENABLE_OFCCL"))
+    else:
+        print("ONEFLOW_ENABLE_OFCCL is None")
     unittest.main()
