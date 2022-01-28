@@ -106,5 +106,6 @@ _deps
 *.fatbin
 
 report*
+nsys/
 
 log/
