@@ -105,4 +105,6 @@ _deps
 *.cubin
 *.fatbin
 
+report*
+
 log/
