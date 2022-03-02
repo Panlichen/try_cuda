@@ -72,6 +72,7 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
         return tuple(result_list)
 
     x = np.random.uniform(-1e-05, 1e-05, (96, 96, 96)).astype(np.float32)
+    print("the shape is", x.shape)
     result_tuple = partial_sum_to_broadcast_job(x).get()
     for out in result_tuple:
         test_case.assertTrue(np.allclose(np.sum(x, axis=0), out.numpy()))
