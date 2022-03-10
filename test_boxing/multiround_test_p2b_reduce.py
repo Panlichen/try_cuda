@@ -68,11 +68,11 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
                 result_list.append(build_p2b(input_blob, i, j))
         return tuple(result_list)
 
-    # x = np.random.uniform(-1e-05, 1e-05, shape).astype(np.float32)
+    x = np.random.uniform(-1e-05, 1e-05, shape).astype(np.float32)
     # x = np.ones(shape).astype(np.float32)
     # x = np.full(shape, 1).astype(np.float32)
-    x = np.array([[1, 1], [2, 2], [3, 3], [4, 4]]).astype(np.float32)
-    x = np.array([[4, 4], [3, 3], [2, 2], [1, 1]]).astype(np.float32)
+    # x = np.array([[1, 1], [2, 2], [3, 3], [4, 4]]).astype(np.float32)
+    # x = np.array([[4, 4], [3, 3], [2, 2], [1, 1]]).astype(np.float32)
     ori_x = x.copy()
     print("the shape is", x.shape)
     for round in range(warm_up_rounds):
@@ -80,7 +80,7 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
     print("warmup done")
     for round in range(test_rounds):
         result_tuple = partial_sum_to_broadcast_job(x).get()
-        print("result_tuple[0].numpy()", result_tuple[0].numpy())
+        # print("result_tuple[0].numpy()", result_tuple[0].numpy())
         if round >= 10 and round % int(test_rounds / 10) == 0:
             print("round", round, "done")
     # print("np.allclose(x, ori_x):", np.allclose(x, ori_x))
@@ -89,10 +89,10 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
     for out in result_tuple:
         test_case.assertTrue(np.allclose(np.sum(x, axis=0), out.numpy()))
 
-# shape = (1024, 1024, 4)
-shape = (4, 2)
-warm_up_rounds = 0
-test_rounds = 10
+shape = (1024, 1024, 4)
+# shape = (4, 2)
+warm_up_rounds = 10
+test_rounds = 100
 
 @flow.unittest.skip_unless_1n4d()
 class TestBoxingV2(flow.unittest.TestCase):

@@ -84,8 +84,8 @@ def _test_partial_sum_to_broadcast(test_case, src_device_type, dst_device_type):
         test_case.assertTrue(np.allclose(np.sum(x, axis=0), out.numpy()))
 
 shape = (1024, 1024, 4)
-warm_up_rounds = 0
-test_rounds = 5
+warm_up_rounds = 10
+test_rounds = 100
 
 @flow.unittest.skip_unless_1n4d()
 class TestBoxingV2(flow.unittest.TestCase):
