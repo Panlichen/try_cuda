@@ -1,7 +1,5 @@
 import itertools
 
-from cv2 import reduce
-
 num_round = 10
 
 def calc_out(input):
